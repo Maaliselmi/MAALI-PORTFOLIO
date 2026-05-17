@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ========================================================
+       (01) TITOLO DELLA SCHEDA DEL BROWSER
+       Sostituisci "Il Tuo Nome | Portfolio" con il tuo nome
+       ======================================================== -->
+  <title>Maali Selmi | design Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       VARIABILI GLOBALI E RESET
+       ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f2;
+      --accent: #c8b89a;
+      --gray: #888;
+      --header-h: 52px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* =============================================
+       HEADER
+       ============================================= */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: var(--black);
+      display: flex;
+      align-items: stretch;
+      z-index: 1000;
+    }
+
+    /* (02) NOME NELL'HEADER — sostituisci "Il Tuo Nome" */
+    .header-name {
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      color: var(--white);
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    nav {
+      margin-left: auto;
+      display: flex;
+      align-items: stretch;
+    }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      padding: 0 22px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    nav a:hover { color: var(--white); }
+
+    /* Tab attiva: simula la "linguetta" stile Chrome — diventa bianca come lo sfondo */
+    nav a.active {
+      color: var(--black);
+      background: var(--white);
+      border-radius: 6px 6px 0 0;
+      margin-top: 8px;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    /* ---- Hamburger (mobile) ---- */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      padding: 0 22px;
+      cursor: pointer;
+      margin-left: auto;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      transition: all 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Menu mobile a tendina */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--header-h);
+      left: 0; right: 0;
+      background: var(--black);
+      flex-direction: column;
+      z-index: 999;
+      border-top: 1px solid #222;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      padding: 16px 28px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid #1a1a1a;
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a.active { color: var(--white); }
+    .mobile-menu a:hover  { color: var(--white); }
+
+    /* =============================================
+       SEZIONI GENERALI
+       ============================================= */
+    section {
+      min-height: 100vh;
+      padding-top: var(--header-h);
+    }
+
+    /* =============================================
+       SEZIONE ABOUT
+       ============================================= */
+    #about {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* (03) GIF DI SFONDO — sostituisci "assets/about-bg.gif" con il percorso della tua gif */
+    .about-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/about-bg.gif');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.45);
+      z-index: 0;
+    }
+
+    .about-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 24px;
+      max-width: 820px;
+    }
+
+    /* (04) FRASE D'IMPATTO — modifica il testo dentro il tag <h1> nella sezione about */
+    .about-content h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+      color: var(--white);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .about-content h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* =============================================
+       SEZIONE SKILLS
+       ============================================= */
+    #skills {
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: calc(var(--header-h) + 60px) 40px 80px;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 48px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 36px 28px;
+      max-width: 860px;
+      width: 100%;
+    }
+
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* (05) IMMAGINE SOFTWARE — nella sezione skills, ogni <img src="..."> va sostituita
+            con il percorso della tua icona (es. assets/skills/blender.png).
+            Il testo sotto ogni icona è il nome del software. */
+    .skill-item img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.75;
+      transition: opacity 0.25s, transform 0.25s;
+    }
+
+    .skill-item:hover img { opacity: 1; transform: scale(1.1); }
+
+    .skill-item span {
+      font-size: 0.65rem;
+      color: #666;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* =============================================
+       SEZIONE PROJECTS
+       ============================================= */
+    #projects {
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: calc(var(--header-h) + 60px) 40px 80px;
+    }
+
+    #projects .section-label { color: var(--black); opacity: 0.4; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    /* (06) CARD PROGETTO — ogni <a href="..."> punta al PDF caricato (percorso relativo).
+            Sostituisci assets/projects/progetto1.pdf con il percorso del tuo file.
+            NOTA: il PDF si apre nella stessa scheda (no target="_blank"). */
+    .project-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .project-card-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      background: #ddd;
+    }
+
+    .project-card:hover .project-card-img {
+      transform: scale(1.03);
+      filter: brightness(0.88);
+    }
+
+    .project-card-name {
+      padding: 10px 2px 0;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #444;
+      transition: color 0.2s;
+    }
+
+    .project-card:hover .project-card-name { color: var(--black); }
+
+    /* =============================================
+       FOOTER / CONTATTI
+       ============================================= */
+    #contacts {
+      background: var(--black);
+      min-height: auto;
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* (07) NOTA DEL FOOTER — testo piccolo a sinistra (opzionale, es. copyright) */
+    .footer-left {
+      font-size: 0.7rem;
+      color: #444;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    /* (08) EMAIL — sostituisci "tua@email.com" con la tua email
+            nel tag <a href="mailto:..."> e nel testo visibile */
+    /* (09) LINK CV — sostituisci "assets/cv.pdf" con il percorso del tuo CV */
+    .footer-right a {
+      font-size: 0.78rem;
+      color: #888;
+      text-decoration: none;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .footer-right a:hover { color: var(--white); }
+
+    .footer-divider {
+      width: 1px;
+      height: 14px;
+      background: #333;
+    }
+
+    /* =============================================
+       RESPONSIVE MOBILE
+       ============================================= */
+    @media (max-width: 700px) {
+      nav { display: none; }
+      .hamburger { display: flex; }
+
+      .projects-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+      #skills, #projects { padding-left: 20px; padding-right: 20px; }
+
+      #contacts { padding: 28px 20px; }
+      .footer-left { display: none; }
+    }
+
+    @media (max-width: 420px) {
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header>
+
+    <!-- (02) NOME — sostituisci "Il Tuo Nome" -->
+    <a href="#about" class="header-name">Maali Selmi</a>
+
+    <!-- Navigazione desktop -->
+    <nav id="desktop-nav">
+      <a href="#about"    class="nav-link active">About</a>
+      <a href="#skills"   class="nav-link">Skills</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#contacts" class="nav-link">Contacts</a>
+    </nav>
+
+    <!-- Pulsante hamburger (mobile) -->
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
+  </header>
+
+  <!-- Menu mobile a tendina -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#about"    class="nav-link">About</a>
+    <a href="#skills"   class="nav-link">Skills</a>
+    <a href="#projects" class="nav-link">Projects</a>
+    <a href="#contacts" class="nav-link">Contacts</a>
+  </div>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section id="about">
+    <div class="about-bg"></div>
+    <!-- (03) GIF DI SFONDO → modifica url('assets/about-bg.gif') nel CSS sopra -->
+
+    <div class="about-content">
+      <!-- (04) FRASE D'IMPATTO — modifica il testo qui sotto -->
+      <h1>Sono un designer industriale.<br><em>Trasformo idee in forme.</em></h1>
+    </div>
+  </section>
+
+  <!-- ==================== SKILLS ==================== -->
+  <section id="skills">
+    <p class="section-label">Skills</p>
+
+    <div class="skills-grid">
+
+      <!-- (05a) SOFTWARE: Blender — sostituisci src con il percorso della tua icona -->
+      <div class="skill-item">
+        <img src="assets/skills/blender.png" alt="Blender" />
+        <span>Blender</span>
+      </div>
+
+      <!-- (05b) SOFTWARE: Alias -->
+      <div class="skill-item">
+        <img src="assets/skills/alias.png" alt="Alias" />
+        <span>Alias</span>
+      </div>
+
+      <!-- (05c) SOFTWARE: AutoCAD -->
+      <div class="skill-item">
+        <img src="assets/skills/autocad.png" alt="AutoCAD" />
+        <span>AutoCAD</span>
+      </div>
+
+      <!-- (05d) SOFTWARE: Fusion 360 -->
+      <div class="skill-item">
+        <img src="assets/skills/fusion.png" alt="Fusion 360" />
+        <span>Fusion 360</span>
+      </div>
+
+      <!-- (05e) SOFTWARE: Inventor -->
+      <div class="skill-item">
+        <img src="assets/skills/inventor.png" alt="Inventor" />
+        <span>Inventor</span>
+      </div>
+
+      <!-- (05f) SOFTWARE: KeyShot -->
+      <div class="skill-item">
+        <img src="assets/skills/keyshot.png" alt="KeyShot" />
+        <span>KeyShot</span>
+      </div>
+
+      <!-- (05g) SOFTWARE: Photoshop -->
+      <div class="skill-item">
+        <img src="assets/skills/photoshop.png" alt="Photoshop" />
+        <span>Photoshop</span>
+      </div>
+
+      <!-- (05h) SOFTWARE: Figma -->
+      <div class="skill-item">
+        <img src="assets/skills/figma.png" alt="Figma" />
+        <span>Figma</span>
+      </div>
+
+      <!-- (05i) SOFTWARE: Illustrator -->
+      <div class="skill-item">
+        <img src="assets/skills/illustrator.png" alt="Illustrator" />
+        <span>Illustrator</span>
+      </div>
+
+      <!-- (05j) SOFTWARE: CapCut -->
+      <div class="skill-item">
+        <img src="assets/skills/capcut.png" alt="CapCut" />
+        <span>CapCut</span>
+      </div>
+
+      <!-- (05k) LINGUE: Inglese C2 — puoi usare una flag o un'icona -->
+      <div class="skill-item">
+        <img src="assets/skills/english.png" alt="English C2" />
+        <span>English C2</span>
+      </div>
+
+      <!-- (05l) LINGUE: Italiano nativo -->
+      <div class="skill-item">
+        <img src="assets/skills/italian.png" alt="Italiano" />
+        <span>Italiano</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== PROJECTS ==================== -->
+  <section id="projects">
+    <p class="section-label">Projects</p>
+
+    <div class="projects-grid">
+
+      <!-- -----------------------------------------------
+           (06a) PROGETTO 1
+           href      → (06a-PDF)  percorso del PDF, es. assets/projects/progetto1.pdf
+           img src   → (06a-IMG)  percorso immagine render, es. assets/projects/progetto1.jpg
+           alt       → descrizione breve per accessibilità
+           testo     → (06a-NOME) nome del progetto
+           ----------------------------------------------- -->
+      <a class="project-card" href="assets/projects/progetto1.pdf">
+        <img class="project-card-img" src="assets/projects/progetto1.jpg" alt="Nome Progetto 1" />
+        <p class="project-card-name">Nome Progetto 1</p>
+      </a>
+
+      <!-- (06b) PROGETTO 2 -->
+      <a class="project-card" href="assets/projects/progetto2.pdf">
+        <img class="project-card-img" src="assets/projects/progetto2.jpg" alt="Nome Progetto 2" />
+        <p class="project-card-name">Nome Progetto 2</p>
+      </a>
+
+      <!-- (06c) PROGETTO 3 -->
+      <a class="project-card" href="assets/projects/progetto3.pdf">
+        <img class="project-card-img" src="assets/projects/progetto3.jpg" alt="Nome Progetto 3" />
+        <p class="project-card-name">Nome Progetto 3</p>
+      </a>
+
+      <!-- (06d) PROGETTO 4 -->
+      <a class="project-card" href="assets/projects/progetto4.pdf">
+        <img class="project-card-img" src="assets/projects/progetto4.jpg" alt="Nome Progetto 4" />
+        <p class="project-card-name">Nome Progetto 4</p>
+      </a>
+
+      <!-- (06e) PROGETTO 5 -->
+      <a class="project-card" href="assets/projects/progetto5.pdf">
+        <img class="project-card-img" src="assets/projects/progetto5.jpg" alt="Nome Progetto 5" />
+        <p class="project-card-name">Nome Progetto 5</p>
+      </a>
+
+      <!-- (06f) PROGETTO 6 -->
+      <a class="project-card" href="assets/projects/progetto6.pdf">
+        <img class="project-card-img" src="assets/projects/progetto6.jpg" alt="Nome Progetto 6" />
+        <p class="project-card-name">Nome Progetto 6</p>
+      </a>
+
+      <!-- -----------------------------------------------
+           Per aggiungere altri progetti, copia uno dei
+           blocchi qui sopra e cambia i percorsi e il nome.
+           ----------------------------------------------- -->
+
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER / CONTACTS ==================== -->
+  <footer id="contacts">
+
+    <!-- (07) TESTO SINISTRA FOOTER — puoi cambiarlo o cancellarlo -->
+    <p class="footer-left">© 2025 Maali Selmi</p>
+
+    <div class="footer-right">
+
+      <!-- (08) EMAIL — sostituisci entrambe le occorrenze con la tua email -->
+      <a href="mailto:tua@email.com">tua@email.com</a>
+
+      <div class="footer-divider"></div>
+
+      <!-- (09) CV — sostituisci "assets/cv.pdf" con il percorso del tuo CV
+                 download="CV_TuoNome.pdf" imposta il nome del file scaricato -->
+      <a href="assets/cv.pdf" download="CV_TuoNome.pdf">Download CV</a>
+
+    </div>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    /* -------------------------------------------------------
+       HAMBURGER MENU (mobile)
+       ------------------------------------------------------- */
+    const hamburger   = document.getElementById('hamburger');
+    const mobileMenu  = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+
+    // Chiude il menu mobile quando si clicca un link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    /* -------------------------------------------------------
+       ACTIVE LINK — aggiorna la tab attiva in base allo scroll
+       ------------------------------------------------------- */
+    const sections = document.querySelectorAll('section, footer');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, {
+      rootMargin: `-${getComputedStyle(document.documentElement).getPropertyValue('--header-h')} 0px -55% 0px`,
+      threshold: 0
+    });
+
+    sections.forEach(sec => observer.observe(sec));
+  </script>
+
+</body>
+</html>
